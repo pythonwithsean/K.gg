@@ -1,22 +1,24 @@
-### Simple Key/val Store in Go
+### TCP Key-Value Store in Go
 
-A simple TCP-based key-val store server written in Go.
+This project is a simple in-memory key-value store running on top of TCP.
 
-#### Run program
+Clients connect to the server over TCP and send plain text protocol commands.
+
+#### Run the server
 ```bash
-go run main.go
+go run ./cmd
 ```
 
-#### Available Commands
-- `GET <key>` : Retrieve the val for the specified key.
-- `PUT <key> <val>` : Store a val for the specified key.
-- `DEL <key>` : Delete the key-val pair.
-- `LIST` : List all keys and vals.
+#### Protocol commands
+- `PUT <key> <value>`: Store a value for a key.
+- `GET <key>`: Retrieve the value for a key.
+- `DEL <key>`: Delete a key-value pair.
+- `LIST`: List all key-value pairs as `key=value` lines.
 
-#### Usage
-After running the program, connect to the server using TELNET or nc on localhost:8080.
+#### Connect and send commands
+To interact with the server, use any TCP client tool such as `telnet` or `nc` (netcat), then pass your commands.
 
-**Examples:**
-
-- Using nc: `echo "GET example" | nc localhost 8080`
-- Using telnet: `telnet localhost 8080` then type commands like `GET example` and press Enter.
+Examples:
+- One-shot with `nc`: `echo "PUT name sean" | nc localhost 8080`
+- One-shot with `nc`: `echo "GET name" | nc localhost 8080`
+- Interactive with `telnet`: `telnet localhost 8080` and then type commands like `PUT city sf`, `GET city`, or `LIST`.
