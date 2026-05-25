@@ -84,14 +84,13 @@ func (server *Server) handleConnection(conn net.Conn) {
 }
 
 func (server *Server) Start() {
-	fullAddr := fmt.Sprintf("%s:%s", server.addr, server.port)
-	listener, err := net.Listen("tcp", fullAddr)
+	endpoint := fmt.Sprintf("%s:%s", server.addr, server.port)
+	listener, err := net.Listen("tcp", endpoint)
 	if err != nil {
 		log.Fatal("[err]: failed to start server listener")
 	}
 	defer listener.Close()
-
-	log.Printf("Server listening on %s", fullAddr)
+	log.Printf("Server listening on %s", endpoint)
 	go server.removeExpiredKeys()
 	for {
 		conn, err := listener.Accept()
